@@ -1,0 +1,26 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool: CI-Pool
+
+steps:
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: '*/**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: UniversalPackages@0
+  inputs:
+    command: 'publish'
+    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+    feedsToUsePublish: 'internal'
+    vstsFeedPublish: '680ed216-9463-467e-90b3-b1757cdb7c2c'
+    vstsFeedPackagePublish: 'terraform-artifact'
+    versionOption: 'patch'
+    packagePublishDescription: 'publish to Azure Artifacts'
