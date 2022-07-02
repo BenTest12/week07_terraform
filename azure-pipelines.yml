@@ -6,14 +6,21 @@
 trigger:
 - main
 
-pool:
-  vmImage: ubuntu-latest
+pool: CI-Pool
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: '*/**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: UniversalPackages@0
+  inputs:
+    command: 'publish'
+    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+    feedsToUsePublish: 'internal'
+    vstsFeedPublish: '680ed216-9463-467e-90b3-b1757cdb7c2c'
+    vstsFeedPackagePublish: 'terraform-artifact'
+    versionOption: 'patch'
+    packagePublishDescription: 'publish to Azure Artifacts'
