@@ -1,6 +1,9 @@
 # env files
 *.env
 
+#.history
+*.history/
+
 #Windows INI Sensitive
 windows_inventory.ini
 
