@@ -55,45 +55,5 @@ resource "azurerm_monitor_autoscale_setting" "autoscale_setting" {
       maximum = 3
       minimum = 3
     }
-
-    # rule {
-    #   metric_trigger {
-    #     metric_name        = "Percentage CPU"
-    #     metric_resource_id = azurerm_linux_virtual_machine_scale_set.weight_app_vmss.id
-    #     operator           = "GreaterThan"
-    #     statistic          = "Average"
-    #     threshold          = 75
-    #     time_aggregation   = "Average"
-    #     time_grain         = "PT1M"
-    #     time_window        = "PT5M"
-    #     metric_namespace   = "microsoft.compute/virtualmachinescalesets"
-    #   }
-    #   scale_action {
-    #     cooldown  = "PT1M"
-    #     direction = "Increase"
-    #     type      = "ChangeCount"
-    #     value     = 1
-    #   }
-    # }
-    # rule {
-    #   metric_trigger {
-    #     metric_name        = "Percentage CPU"
-    #     metric_resource_id = azurerm_linux_virtual_machine_scale_set.weight_app_vmss.id
-    #     time_grain         = "PT1M"
-    #     statistic          = "Average"
-    #     time_window        = "PT5M"
-    #     time_aggregation   = "Average"
-    #     operator           = "LessThan"
-    #     threshold          = 25
-    #     metric_namespace   = "microsoft.compute/virtualmachinescalesets"
-    #   }
-
-    #   scale_action {
-    #     direction = "Decrease"
-    #     type      = "ChangeCount"
-    #     value     = "1"
-    #     cooldown  = "PT1M"
-    #   }
-    # }
   }
 }

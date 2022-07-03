@@ -75,18 +75,6 @@ resource "azurerm_network_security_group" "weight_app_nsg" {
     source_address_prefix      = var.my_ip
     destination_address_prefix = "*"
   }
-
-  # security_rule {
-  #   name                       = "DENY_ALL"
-  #   priority                   = 150
-  #   direction                  = "Inbound"
-  #   access                     = "Deny"
-  #   protocol                   = "*"
-  #   source_port_range          = "*"
-  #   destination_port_range     = "*"
-  #   source_address_prefix      = "*"
-  #   destination_address_prefix = "*"
-  # }
 }
 
 # Creating the database network security group with rules to allow communication between the app virtual machines and the db server
@@ -117,18 +105,6 @@ resource "azurerm_network_security_group" "db_nsg" {
     source_address_prefix      = var.app_subnet_address_range
     destination_address_prefix = "*"
   }
-
-  # security_rule {
-  #   name                       = "DENY_ALL"
-  #   priority                   = 150
-  #   direction                  = "Inbound"
-  #   access                     = "Deny"
-  #   protocol                   = "*"
-  #   source_port_range          = "*"
-  #   destination_port_range     = "*"
-  #   source_address_prefix      = "*"
-  #   destination_address_prefix = "*"
-  # }
 }
 
 # Associating the security groups to the subnets
