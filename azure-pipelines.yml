@@ -1,26 +1,65 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+name: ben1212docker
 
 trigger:
 - main
+#- feature/*
 
-pool: CI-Pool
+pool: Docker
+  #vmImage: ubuntu-latest
 
-steps:
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)'
-    Contents: '*/**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-- task: UniversalPackages@0
-  inputs:
-    command: 'publish'
-    publishDirectory: '$(Build.ArtifactStagingDirectory)'
-    feedsToUsePublish: 'internal'
-    vstsFeedPublish: '680ed216-9463-467e-90b3-b1757cdb7c2c'
-    vstsFeedPackagePublish: 'terraform-artifact'
-    versionOption: 'patch'
-    packagePublishDescription: 'publish to Azure Artifacts'
+variables:
+  - group: "Staging Variables"
+
+stages:
+
+# Continuous Integration Process
+- stage: CI
+  jobs:
+  - job: BuildAndPushDocker
+    workspace: 
+      clean: all
+    steps:
+      - task: DockerInstaller@0
+        inputs:
+          dockerVersion: '17.09.0-ce'
+      - task: Docker@2
+        inputs:
+          containerRegistry: 'ben1212docker.azurecr.io'
+          repository: 'weight-app-repository'
+          command: 'buildAndPush'
+          Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+
+
+# Continuous Deployment Process for Staging Environment
+# - stage: DeployToStaging
+#   condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+#   jobs:
+#   - deployment: staging
+#     displayName: Deploy to Staging
+#     environment:
+#       name: "dockhost000001"
+#       resourceType: VirtualMachine
+
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+          
+
+# Continuous Delivery Process for Production Environment
+
+
+# - stage: DeployToProduction
+#   condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+#   jobs:
+#       - deployment: production
+#         displayName: Deploy to Production
+#         environment:
+#           name: <<YOUR ENVIRONMENT NAME>>
+#           resourceType: VirtualMachine
+#         strategy:
+#           runOnce:
+#             deploy:
+#               steps:
+              
