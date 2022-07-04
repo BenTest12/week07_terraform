@@ -9,7 +9,7 @@ pool: Docker
 
 
 variables:
-  - group: Staging Variables
+  - group: Staging-Variables
 
 stages:
 
