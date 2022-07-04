@@ -8,8 +8,8 @@ pool: Docker
   #vmImage: ubuntu-latest
 
 
-variables:
-  - group: Staging-Variables
+# variables:
+#   - group: Staging-Variables
 
 stages:
 
