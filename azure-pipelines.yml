@@ -28,7 +28,7 @@ stages:
           containerRegistry: 'ben1212docker.azurecr.io'
           repository: 'weight-app-repository'
           command: 'buildAndPush'
-          Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+          Dockerfile: 'Dockerfile'
 
 
 # Continuous Deployment Process for Staging Environment
